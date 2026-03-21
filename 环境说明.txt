@@ -1,0 +1,4 @@
+1、新建Web Project，File->Project Structure->Modules-> + ->Web -> 右下角Fix->Artifacts ->Apply->OK;
+2、导入Tomcat Jar包，File->Project Structure ->Modules ->点击项目名-> + ->Library... ->Tomcat 10.1.39;
+3、jdk
+4、配置Tomcat，点击run三角形左边的展开->Edit Configurations...-> + ->Tomcat Server ->Local ->Apply->OK;
