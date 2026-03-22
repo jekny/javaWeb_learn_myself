@@ -15,7 +15,7 @@
 <body>
     <h2>部门详情</h2>
     <hr>
-    部门编号：<%=num.getDeptno()%>><br>
+    部门编号：<%=num.getDeptno()%><br>
     部门名称：<%=num.getDname()%><br>
     部门位置：<%=num.getLoc()%><br>
     <br>

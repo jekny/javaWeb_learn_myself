@@ -25,7 +25,7 @@ import java.util.Collection;
  * @Create 2026/3/22 8:11
  * @Version 1.0
  */
-@WebServlet(value = {"/dept/list","/dept/add","/dept/delete","/dept/detail"})
+@WebServlet(value = {"/dept/list","/dept/add","/dept/delete","/dept/detail","/dept/xiugai"})
 public class deptServer extends HttpServlet {
     @Override
     protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -41,7 +41,42 @@ public class deptServer extends HttpServlet {
             doDelete_my(request,response);
         }else if ("/dept/detail".equals(servletPath)){
             doDetail(request,response);
+        }else if ("/dept/xiugai".equals(servletPath)){
+            doXiuGai(request,response);
         }
+    }
+
+    private void doXiuGai(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+        response.setContentType("text/html;chatset=utf-8");
+        request.setCharacterEncoding("UTF-8");
+
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        String contextPath = request.getContextPath();
+
+        int no = Integer.parseInt(request.getParameter("no"));
+        String name = request.getParameter("name");
+        String address = request.getParameter("address");
+
+        try {
+            con = jdbc_util.getcon();
+            String sql = "update dept set dname = ?,loc = ? where deptno = ?";
+            ps = con.prepareStatement(sql);
+            ps.setString(1,name);
+            ps.setString(2,address);
+            ps.setInt(3,no);
+            int count = ps.executeUpdate();
+            if (count == 1) {
+                response.sendRedirect(contextPath+"/dept/list");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }finally {
+            jdbc_util.close(con,ps,rs);
+        }
+
     }
 
     private void doDetail(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
