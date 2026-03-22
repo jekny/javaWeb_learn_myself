@@ -33,7 +33,40 @@ public class deptServer extends HttpServlet {
 
         if ("/dept/list".equals(servletPath)){
             doList(request,response);
+        }else if ("/dept/add".equals(servletPath)){
+            doAdd(request,response);
         }
+    }
+
+    private void doAdd(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+        response.setContentType("text/html;charset=utf-8");
+        request.setCharacterEncoding("UTF-8");
+
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        int no = Integer.parseInt(request.getParameter("no"));
+        String name = request.getParameter("name");
+        String address = request.getParameter("address");
+
+        try {
+            con = jdbc_util.getcon();
+            String sql = "insert into dept (deptno,dname,loc) values (?,?,?)";
+            ps = con.prepareStatement(sql);
+            ps.setInt(1,no);
+            ps.setString(2,name);
+            ps.setString(3,address);
+
+            int count = ps.executeUpdate();
+
+            if (count == 1) {
+                response.sendRedirect(request.getContextPath()+"/dept/list");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
     private void doList(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{

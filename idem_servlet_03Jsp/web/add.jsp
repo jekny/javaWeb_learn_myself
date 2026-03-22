@@ -8,7 +8,7 @@
 </head>
 <body>
     <h2>新增页面</h2><hr>
-    <form action="<%=request.getContextPath()%>/dept/list" method="get">
+    <form action="<%=request.getContextPath()%>/dept/add" method="get">
         新增部门编号：<input type="text" name="no"><br>
         新增部门名称：<input type="text" name="name"><br>
         新增部门地址：<input type="text" name="address"><br>
