@@ -8,7 +8,7 @@
 </head>
 <body>
     <h2>修改页面</h2><hr>
-    <form action="list.jsp" method="get">
+    <form action="<%=request.getContextPath()%>/dept/list" method="get">
         部门编号：<input type="text" name="no" readonly value="10"><br>
         修改部门名称：<input type="text" name="name" value=""><br>
         修改部门地址：<input type="text" name="address" value=""><br>

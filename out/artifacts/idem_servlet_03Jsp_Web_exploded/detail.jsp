@@ -14,6 +14,6 @@
     部门位置：北京<br>
     <br>
         <hr>
-    <a href="list.jsp">返回列表</a>
+    <a href="<%=request.getContextPath()%>/dept/list">返回列表</a>
 </body>
 </html>

@@ -1,0 +1,69 @@
+package com.oa.myItem.deptServer;
+
+import com.oa.myItem.bean.myJavaBean;
+import com.oa.myItem.jdbcUtil.jdbc_util;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
+/**
+ * ClassName: deptServer
+ * Description:
+ *
+ * @Author jekny
+ * @Create 2026/3/22 8:11
+ * @Version 1.0
+ */
+@WebServlet(value = {"/dept/list","/dept/add"})
+public class deptServer extends HttpServlet {
+    @Override
+    protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setContentType("text/html;charset=utf-8");
+        request.setCharacterEncoding("UTF-8");
+        String servletPath = request.getServletPath();
+
+        if ("/dept/list".equals(servletPath)){
+            doList(request,response);
+        }
+    }
+
+    private void doList(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+        response.setContentType("text/html;charset=utf-8");
+        request.setCharacterEncoding("UTF-8");
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        ArrayList<myJavaBean> deptServers = new ArrayList<>();
+
+        try {
+            con = jdbc_util.getcon();
+            String sql = "select deptno,dname,loc from dept";
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while(rs.next()){
+                myJavaBean num = new myJavaBean();
+                int deptno = rs.getInt("deptno");
+                String dname = rs.getString("dname");
+                String loc = rs.getString("loc");
+                num.setDeptno(deptno);
+                num.setDname(dname);
+                num.setLoc(loc);
+                deptServers.add(num);
+            }
+            request.setAttribute("nums",deptServers);
+            request.getRequestDispatcher("/list.jsp").forward(request,response);
+            //System.out.println(deptServers);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+}
