@@ -12,8 +12,6 @@
         新增部门编号：<input type="text" name="no"><br>
         新增部门名称：<input type="text" name="name"><br>
         新增部门地址：<input type="text" name="address"><br>
-
-        
         <input type="submit" value="提交" name="sbt">
         <input type="reset" value="重置" name="reset">
     </form>

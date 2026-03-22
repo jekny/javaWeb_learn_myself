@@ -41,7 +41,7 @@
             <td><%=deptno%></td>
             <td><%=dname%></td>
             <td>
-                <a href="">删除</a>
+                <a href="<%=contextPath%>/dept/delete?no=<%=deptno%>">删除</a>
                 <a href="<%=contextPath%>/edit.jsp">修改</a>
                 <a href="<%=contextPath%>/detail.jsp">详细</a>
             </td>
