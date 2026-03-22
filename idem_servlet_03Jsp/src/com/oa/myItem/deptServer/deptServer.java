@@ -25,7 +25,7 @@ import java.util.Collection;
  * @Create 2026/3/22 8:11
  * @Version 1.0
  */
-@WebServlet(value = {"/dept/list","/dept/add","/dept/delete"})
+@WebServlet(value = {"/dept/list","/dept/add","/dept/delete","/dept/detail"})
 public class deptServer extends HttpServlet {
     @Override
     protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -39,6 +39,45 @@ public class deptServer extends HttpServlet {
             doAdd(request,response);
         }else if ("/dept/delete".equals(servletPath)){
             doDelete_my(request,response);
+        }else if ("/dept/detail".equals(servletPath)){
+            doDetail(request,response);
+        }
+    }
+
+    private void doDetail(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+        response.setContentType("text/html;charset=utf-8");
+        request.setCharacterEncoding("UTF-8");
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        myJavaBean myJavaBean = new myJavaBean();
+        int no = Integer.parseInt(request.getParameter("no"));
+
+        try {
+            con = jdbc_util.getcon();
+            String sql = "select deptno,dname,loc from dept where deptno = ?";
+            ps = con.prepareStatement(sql);
+            ps.setInt(1,no);
+
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                String dname = rs.getString("dname");
+                String loc = rs.getString("loc");
+
+                myJavaBean.setDeptno(no);
+                myJavaBean.setDname(dname);
+                myJavaBean.setLoc(loc);
+
+            }
+
+            request.setAttribute("num", myJavaBean);
+            request.getRequestDispatcher("/detail.jsp").forward(request,response);
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }finally {
+            jdbc_util.close(con,ps,rs);
         }
     }
 
@@ -64,6 +103,8 @@ public class deptServer extends HttpServlet {
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        }finally {
+            jdbc_util.close(con,ps,rs);
         }
     }
 
@@ -94,8 +135,9 @@ public class deptServer extends HttpServlet {
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        }finally {
+            jdbc_util.close(con,ps,rs);
         }
-
     }
 
     private void doList(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
@@ -126,6 +168,8 @@ public class deptServer extends HttpServlet {
             //System.out.println(deptServers);
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        }finally {
+            jdbc_util.close(con,ps,rs);
         }
     }
 }

@@ -43,7 +43,7 @@
             <td>
                 <a href="<%=contextPath%>/dept/delete?no=<%=deptno%>">删除</a>
                 <a href="<%=contextPath%>/edit.jsp">修改</a>
-                <a href="<%=contextPath%>/detail.jsp">详细</a>
+                <a href="<%=contextPath%>/dept/detail?no=<%=deptno%>">详细</a>
             </td>
         </tr>
         <%

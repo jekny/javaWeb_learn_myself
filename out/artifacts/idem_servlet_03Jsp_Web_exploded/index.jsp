@@ -7,7 +7,6 @@
     <title>Document</title>
 </head>
 <body>
-<%=request.getContextPath()%>
     <h1><a href="<%=request.getContextPath()%>/dept/list">查看列表</a></h1>
 </body>
 </html>
