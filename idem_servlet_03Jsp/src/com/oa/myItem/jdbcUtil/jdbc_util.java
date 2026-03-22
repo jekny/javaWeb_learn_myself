@@ -24,7 +24,7 @@ public class jdbc_util {
     static {
         try {
             Class.forName(driver);
-            System.out.println("驱动加载成功");
+            System.out.println("数据库加载成功  这一行配置到tomcat的VM中能解决控制台中文乱码问题    -Dfile.encoding=UTF-8");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
             throw new RuntimeException(e);
