@@ -16,7 +16,8 @@
 
 </head>
 <body>
-    <p style="text-align: center;">welcome the page system</p>
+    <p style="text-align: center;">welcome the page system  ： <%=session.getAttribute("username")%></p>
+    <div style="text-align: right ;padding-right: 500px"><a href="<%=request.getContextPath()%>/user/exit" > 安全退出</a></div>
     <hr>
     <table border="1px solid" align="center" width = "800px">
         <tr>

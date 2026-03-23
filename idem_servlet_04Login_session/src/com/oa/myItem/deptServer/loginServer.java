@@ -22,18 +22,30 @@ import java.sql.SQLException;
  * @Create 2026/3/22 18:15
  * @Version 1.0
  */
-@WebServlet(value = {"/user/login"})
+@WebServlet(value = {"/user/login","/user/exit"})
 public class loginServer extends HttpServlet {
+
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=utf-8");
         request.setCharacterEncoding("utf-8");
         String servletPath = request.getServletPath();
 
         if ("/user/login".equals(servletPath)){
             doLogin(request,response);
+        }else if ("/user/exit".equals(servletPath)){
+            doExit(request,response);
         }
     }
+
+    private void doExit(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession(false);
+        if (session!=null){
+            session.invalidate();//手动销毁session对象，在list页面写一个链接连接到这里，如果有session就进入到这个循环中进行销毁
+            response.sendRedirect(request.getContextPath()+"/index.jsp");
+        }
+    }
+
 
     private void doLogin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
         response.setContentType("text/html;charset=utf-8");
