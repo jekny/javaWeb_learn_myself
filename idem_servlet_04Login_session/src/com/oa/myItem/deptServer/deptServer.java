@@ -7,6 +7,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -31,18 +32,23 @@ public class deptServer extends HttpServlet {
         response.setContentType("text/html;charset=utf-8");
         request.setCharacterEncoding("UTF-8");
         String servletPath = request.getServletPath();
-
-        if ("/dept/list".equals(servletPath)){
-            doList(request,response);
-        }else if ("/dept/add".equals(servletPath)){
-            doAdd(request,response);
-        }else if ("/dept/delete".equals(servletPath)){
-            doDelete_my(request,response);
-        }else if ("/dept/detail".equals(servletPath)){
-            doDetail(request,response);
-        }else if ("/dept/xiugai".equals(servletPath)){
-            doXiuGai(request,response);
+        HttpSession session = request.getSession(false);
+        if (session!=null && session.getAttribute("username")!=null){
+            if ("/dept/list".equals(servletPath)){
+                doList(request,response);
+            }else if ("/dept/add".equals(servletPath)){
+                doAdd(request,response);
+            }else if ("/dept/delete".equals(servletPath)){
+                doDelete_my(request,response);
+            }else if ("/dept/detail".equals(servletPath)){
+                doDetail(request,response);
+            }else if ("/dept/xiugai".equals(servletPath)){
+                doXiuGai(request,response);
+            }
+        }else{
+            response.sendRedirect(request.getContextPath()+"/error.jsp");
         }
+
     }
 
     private void doXiuGai(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
