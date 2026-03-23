@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/LaoDu_class_test_All.iml" filepath="$PROJECT_DIR$/LaoDu_class_test_All.iml" />
       <module fileurl="file://$PROJECT_DIR$/_03jsp_test/_03jsp_test.iml" filepath="$PROJECT_DIR$/_03jsp_test/_03jsp_test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/_04cookie_test/_04cookie_test.iml" filepath="$PROJECT_DIR$/_04cookie_test/_04cookie_test.iml" />
       <module fileurl="file://$PROJECT_DIR$/chongdingxiang/chongdingxiang.iml" filepath="$PROJECT_DIR$/chongdingxiang/chongdingxiang.iml" />
       <module fileurl="file://$PROJECT_DIR$/idem_servlet/idem_servlet.iml" filepath="$PROJECT_DIR$/idem_servlet/idem_servlet.iml" />
       <module fileurl="file://$PROJECT_DIR$/idem_servlet_02zhujie/idem_servlet_02zhujie.iml" filepath="$PROJECT_DIR$/idem_servlet_02zhujie/idem_servlet_02zhujie.iml" />
