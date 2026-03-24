@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/EL_test/EL_test.iml" filepath="$PROJECT_DIR$/EL_test/EL_test.iml" />
       <module fileurl="file://$PROJECT_DIR$/LaoDu_class_test_All.iml" filepath="$PROJECT_DIR$/LaoDu_class_test_All.iml" />
       <module fileurl="file://$PROJECT_DIR$/_03jsp_test/_03jsp_test.iml" filepath="$PROJECT_DIR$/_03jsp_test/_03jsp_test.iml" />
       <module fileurl="file://$PROJECT_DIR$/_04cookie_test/_04cookie_test.iml" filepath="$PROJECT_DIR$/_04cookie_test/_04cookie_test.iml" />
