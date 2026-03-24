@@ -46,7 +46,7 @@ public class deptServer extends HttpServlet {
                 doXiuGai(request,response);
             }
         }else{
-            response.sendRedirect(request.getContextPath()+"/error.jsp");
+            response.sendRedirect(request.getContextPath()+"/index.jsp");
         }
 
     }

@@ -3,10 +3,7 @@ package com.oa.myItem.deptServer;
 import com.oa.myItem.jdbcUtil.jdbc_util;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.http.*;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -24,7 +21,6 @@ import java.sql.SQLException;
  */
 @WebServlet(value = {"/user/login","/user/exit"})
 public class loginServer extends HttpServlet {
-
     @Override
     protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=utf-8");
@@ -67,6 +63,8 @@ public class loginServer extends HttpServlet {
             rs = ps.executeQuery();
             if (rs.next()){
                 status = true;
+            }else {
+                status = false;
             }
 
         } catch (SQLException e) {
@@ -77,9 +75,23 @@ public class loginServer extends HttpServlet {
         if (status){
             HttpSession session = request.getSession();
             session.setAttribute("username",username);//登录成功将用户名存进去，注意这里要用session来setAttribute，因为我们想要将该信息存到HttpSession的会话域当中，不能用request 请求域
+            String f = request.getParameter("f");
+            if ("1".equals(f)){
+                Cookie cookie1 = new Cookie("name",username);
+                Cookie cookie2 = new Cookie("password",password);
+
+                cookie1.setMaxAge(60*60*24);
+                cookie2.setMaxAge(60*60*24);
+
+                cookie2.setPath(request.getContextPath());
+                cookie1.setPath(request.getContextPath());
+
+                response.addCookie(cookie1);
+                response.addCookie(cookie2);
+            }
             response.sendRedirect(request.getContextPath()+"/dept/list");
         }else{
-            response.sendRedirect(request.getContextPath()+"/error.jsp");
+            response.sendRedirect(request.getContextPath()+"/index.jsp");
         }
 
     }

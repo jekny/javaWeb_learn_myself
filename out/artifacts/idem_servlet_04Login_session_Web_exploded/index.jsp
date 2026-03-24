@@ -12,7 +12,8 @@
     <form action="<%=request.getContextPath()%>/user/login" method="post">
         username:<input type="text" name="username" /><br>
         password:<input type="text" name="password"><br>
-
+<%--        如果复选框的name是相同的，则是同一组--%>
+        <input type="checkbox" name="f" value="1"/>一天内免登录<br>
         <input type="submit" name="sbt" value="登录"/>
     </form>
 </body>
