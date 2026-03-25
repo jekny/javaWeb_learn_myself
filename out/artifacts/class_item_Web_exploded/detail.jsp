@@ -11,6 +11,7 @@
     <title>详细</title>
 </head>
 <body>
+<%--展示详细信息这里直接展示数据即可，不要文本框--%>
 物料编号：<input type="text" name="Wno"/><br>
 物料名称：<input type="text" name="Wname"/><br>
 物种：<input type="text" name="Wsp"/><br>

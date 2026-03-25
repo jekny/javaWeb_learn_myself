@@ -1,3 +1,7 @@
+<%@ page import="java.sql.Connection" %>
+<%@ page import="Util.jdbcUtil" %>
+<%@ page import="java.sql.PreparedStatement" %>
+<%@ page import="java.sql.ResultSet" %>
 <%--
   Created by IntelliJ IDEA.
   User: 26568
@@ -23,18 +27,37 @@
             <th>数量&nbsp&nbsp&nbsp&nbsp&nbsp(箱)</th>
             <th>操&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp作</th>
         </tr>
+        <%
+            Connection con = null;
+            PreparedStatement ps = null;
+            ResultSet rs = null;
+            con = jdbcUtil.getCon();
+            String sql = "select Wno,Wname,Wsp,Wnumb,Wposition from wlsystem";
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+        %>
 
+        <%
+            while(rs.next()){
+                String wno = rs.getString("Wno");
+                String wname = rs.getString("Wname");
+                String wsp = rs.getString("Wsp");
+                String wnumb = rs.getString("Wnumb");
+        %>
         <tr style="text-align: center">
-            <td>x</td>
-            <td>x</td>
-            <td>x</td>
-            <td>x</td>
+            <td><%=wno%></td>
+            <td><%=wname%></td>
+            <td><%=wsp%></td>
+            <td><%=wnumb%></td>
             <td>
                 <input type="checkbox" name="deleteAll" value="">
                 <a href="">删除</a>|
-                <a href="<%=request.getContextPath()%>/edit.jsp">修改</a>|
-                <a href="<%=request.getContextPath()%>/detail.jsp">详细</a>
+                <a href="<%=request.getContextPath()%>/edit.jsp?no=<%=wno%>">修改</a>|
+                <a href="<%=request.getContextPath()%>/detail.jsp?no=<%=wno%>">详细</a>
             </td>
+        <%}
+            jdbcUtil.getClose(con,ps,rs);
+        %>
         </tr>
 
     </table>
