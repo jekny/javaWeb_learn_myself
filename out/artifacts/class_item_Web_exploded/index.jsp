@@ -2,6 +2,8 @@
 <%@ page import="Util.jdbcUtil" %>
 <%@ page import="java.sql.PreparedStatement" %>
 <%@ page import="java.sql.ResultSet" %>
+<%@ page import="java.util.List" %>
+<%@ page import="javaBeanObject.stuffBean" %>
 <%--
   Created by IntelliJ IDEA.
   User: 26568
@@ -19,51 +21,44 @@
 <hr>
 <div >
     <a href="<%=request.getContextPath()%>/add.jsp" style="padding-left: 130px; font-size: 25px">添加物料</a>
-    <table border="1px solid" align="center" width = "1000px">
-        <tr >
-            <th>物料编号</th>
-            <th>物料名称</th>
-            <th>种&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp类</th>
-            <th>数量&nbsp&nbsp&nbsp&nbsp&nbsp(箱)</th>
-            <th>操&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp作</th>
-        </tr>
-        <%
-            Connection con = null;
-            PreparedStatement ps = null;
-            ResultSet rs = null;
-            con = jdbcUtil.getCon();
-            String sql = "select Wno,Wname,Wsp,Wnumb,Wposition from wlsystem";
-            ps = con.prepareStatement(sql);
-            rs = ps.executeQuery();
-        %>
-
-        <%
-            while(rs.next()){
-                String wno = rs.getString("Wno");
-                String wname = rs.getString("Wname");
-                String wsp = rs.getString("Wsp");
-                String wnumb = rs.getString("Wnumb");
-        %>
-        <tr style="text-align: center">
-            <td><%=wno%></td>
-            <td><%=wname%></td>
-            <td><%=wsp%></td>
-            <td><%=wnumb%></td>
-            <td>
-                <input type="checkbox" name="deleteAll" value="">
-                <a href="">删除</a>|
-                <a href="<%=request.getContextPath()%>/edit.jsp?no=<%=wno%>">修改</a>|
-                <a href="<%=request.getContextPath()%>/detail.jsp?no=<%=wno%>">详细</a>
-            </td>
-        <%}
-            jdbcUtil.getClose(con,ps,rs);
-        %>
-        </tr>
-
-    </table>
+    <form action="add.jsp" method="get">
+        <table border="1px solid" align="center" width = "1000px">
+            <tr >
+                <th>物料编号</th>
+                <th>物料名称</th>
+                <th>种&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp类</th>
+                <th>数量&nbsp&nbsp&nbsp&nbsp&nbsp(箱)</th>
+                <th>操&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp作</th>
+            </tr>
+            <%
+                List<stuffBean> list = (List<stuffBean>) request.getAttribute("stuff");
+                for (stuffBean sb :
+                        list) {
+                    int wno = sb.getWno();
+                    String wname = sb.getWname();
+                    String wsp = sb.getWsp();
+                    int wnumb = sb.getWnumb();
+                    String wposition = sb.getWposition();
+            %>
+            <tr style="text-align: center">
+                <td><%=wno%></td>
+                <td><%=wname%></td>
+                <td><%=wsp%></td>
+                <td><%=wnumb%></td>
+                <td>
+                    <input type="checkbox" name="deleteAbout" value="<%=wno%>">
+                    <a href="">删除</a>|
+                    <a href="<%=request.getContextPath()%>/edit.jsp?no=<%=wno%>">修改</a>|
+                    <a href="<%=request.getContextPath()%>/detail.jsp?no=<%=wno%>">详细</a>
+                </td>
+            </tr>
+            <%}%>
+        </table>
+        <div style="padding-left: 1140px">
+            <input type="submit" name="sbm" value="删除选择项"/>
+        </div>
+    </form>
 </div>
 <hr>
-
-
 </body>
 </html>

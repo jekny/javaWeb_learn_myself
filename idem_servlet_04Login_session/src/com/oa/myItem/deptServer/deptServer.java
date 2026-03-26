@@ -110,7 +110,6 @@ public class deptServer extends HttpServlet {
                 myJavaBean.setLoc(loc);
 
             }
-
             request.setAttribute("num", myJavaBean);
             request.getRequestDispatcher("/detail.jsp").forward(request,response);
 
