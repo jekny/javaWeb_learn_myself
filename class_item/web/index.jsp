@@ -14,7 +14,7 @@
 <hr>
 <div >
     <a href="<%=request.getContextPath()%>/add.jsp" style="padding-left: 130px; font-size: 25px">添加物料</a>
-    <form action="add.jsp" method="get">
+    <form action="<%=request.getContextPath()%>/stuff/deleteabout" method="get">
         <table border="1px solid" align="center" width = "1000px">
             <tr >
                 <th>物料编号</th>
@@ -40,7 +40,7 @@
                 <td><%=wnumb%></td>
                 <td>
                     <input type="checkbox" name="deleteAbout" value="<%=wno%>">
-                    <a href="">删除</a>|
+                    <a href="<%=request.getContextPath()%>/stuff/delete?no=<%=wno%>">删除</a>|
                     <a href="<%=request.getContextPath()%>/edit.jsp?no=<%=wno%>">修改</a>|
                     <a href="<%=request.getContextPath()%>/detail.jsp?no=<%=wno%>">详细</a>
                 </td>

@@ -23,7 +23,7 @@ import java.util.ArrayList;
  * @Create 2026/3/25 19:15
  * @Version 1.0
  */
-@WebServlet(value = {"/stuff/list","/stuff/add"})
+@WebServlet(value = {"/stuff/list","/stuff/add","/stuff/delete","/stuff/deleteabout"})
 public class stuffServer extends HttpServlet {
     @Override
     protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -34,6 +34,61 @@ public class stuffServer extends HttpServlet {
             doList(request,response);
         }else if ("/stuff/add".equals(servletPath)){
             doAdd(request,response);
+        } else if ("/stuff/delete".equals(servletPath)) {
+            doDelete_one(request,response);
+        }else if ("/stuff/deleteabout".equals(servletPath)){
+            doDeleteAbout(request,response);
+        }
+    }
+
+    private void doDeleteAbout(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+        response.setContentType("text/html;charset=utf-8");
+        request.setCharacterEncoding("utf-8");
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        String[] deleteAbouts = request.getParameterValues("deleteAbout");//这里获取复选框的所有value，遍历删除，可以删除多个
+        int length = deleteAbouts.length;
+        int count = 0;
+        try {
+            for (String str : deleteAbouts) {
+                con = jdbcUtil.getCon();
+                String sql = "delete from wlsystem where Wno = ?";
+                ps = con.prepareStatement(sql);
+                ps.setString(1, str);
+                count += ps.executeUpdate();
+                if (count == length) {
+                    response.sendRedirect(request.getContextPath()+"/stuff/list");
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }finally {
+            jdbcUtil.getClose(con,ps,rs);
+        }
+    }
+
+    private void doDelete_one(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+        response.setContentType("text/html;charset=utf-8");
+        request.setCharacterEncoding("utf-8");
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        int wno = Integer.parseInt(request.getParameter("no"));
+        try {
+            con = jdbcUtil.getCon();
+            String sql = "delete from wlsystem where Wno = ?";
+            ps = con.prepareStatement(sql);
+            ps.setInt(1,wno);
+            int count = ps.executeUpdate();
+            if (count==1){
+                response.sendRedirect(request.getContextPath()+"/stuff/list");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }finally {
+            jdbcUtil.getClose(con,ps,rs);
         }
     }
 
