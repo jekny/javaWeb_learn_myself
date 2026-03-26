@@ -9,6 +9,7 @@
 <%
     stuffBean obj1 = (stuffBean) request.getAttribute("obj1");
 %>
+<%--这里的提交方式要填写，不然不会提交（实验过了）--%>
 <form action="<%=request.getContextPath()%>/stuff/editreal?no=<%=obj1.getWno()%>" method="post">
     物料编号：<input type="text" name="Wno" value="<%=obj1.getWno()%>" readonly/><br>
     物料名称：<input type="text" name="Wname" value="<%=obj1.getWname()%>"/><br>

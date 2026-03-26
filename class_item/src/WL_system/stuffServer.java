@@ -53,10 +53,31 @@ public class stuffServer extends HttpServlet {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
+        int no = Integer.parseInt(request.getParameter("no"));
+        stuffBean obj = new stuffBean();
         try {
             con = jdbcUtil.getCon();
-            String sql = "select Wno,Wname,W";
+            String sql = "select Wno,Wname,Wsp,Wnumb,Wposition from wlsystem where Wno = ?";
             ps = con.prepareStatement(sql);
+            ps.setInt(1,no);
+            rs = ps.executeQuery();
+            while (rs.next()){
+                String wname = rs.getString("Wname");
+                String wsp = rs.getString("Wsp");
+                int wnumb = rs.getInt("Wnumb");
+                String wposition = rs.getString("Wposition");
+                obj.setWno(no);
+                obj.setWname(wname);
+                obj.setWsp(wsp);
+                obj.setWnumb(wnumb);
+                obj.setWposition(wposition);
+            }
+            request.setAttribute("obj",obj);
+            request.getRequestDispatcher("/detail.jsp").forward(request,response);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }finally {
+            jdbcUtil.getClose(con,ps,rs);
         }
     }
 
