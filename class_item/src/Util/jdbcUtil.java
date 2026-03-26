@@ -3,14 +3,6 @@ package Util;
 import java.sql.*;
 import java.util.ResourceBundle;
 
-/**
- * ClassName: jdbcUtil
- * Description:
- *
- * @Author jekny
- * @Create 2026/3/25 21:27
- * @Version 1.0
- */
 public class jdbcUtil {
     private static Connection con = null;
     private static PreparedStatement ps = null;

@@ -32,6 +32,40 @@ public class stuffServer extends HttpServlet {
         String servletPath = request.getServletPath();
         if("/stuff/list".equals(servletPath)){
             doList(request,response);
+        }else if ("/stuff/add".equals(servletPath)){
+            doAdd(request,response);
+        }
+    }
+
+    private void doAdd(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+        response.setContentType("text/html;charset=utf-8");
+        request.setCharacterEncoding("utf-8");
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        int wno = Integer.parseInt(request.getParameter("Wno"));
+        String wname = request.getParameter("Wname");
+        String wsp = request.getParameter("Wsp");
+        int wnumb = Integer.parseInt(request.getParameter("Wnumb"));
+        String wposition = request.getParameter("Wposition");
+
+        try {
+            con = jdbcUtil.getCon();
+            String sql = "insert into wlsystem (Wno,Wname,Wsp,Wnumb,Wposition) values (?,?,?,?,?)";
+            ps = con.prepareStatement(sql);
+            ps.setInt(1,wno);
+            ps.setString(2,wname);
+            ps.setString(3,wsp);
+            ps.setInt(4,wnumb);
+            ps.setString(5,wposition);
+            int count = ps.executeUpdate();
+            if(count==1){
+                response.sendRedirect(request.getContextPath()+"/stuff/list");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }finally {
+            jdbcUtil.getClose(con,ps,rs);
         }
     }
 
@@ -40,7 +74,6 @@ public class stuffServer extends HttpServlet {
         PreparedStatement ps = null;
         ResultSet rs = null;
         ArrayList<stuffBean> list = new ArrayList<>();
-        stuffBean stuff1 = new stuffBean();
 
         try {
             con = jdbcUtil.getCon();
@@ -48,6 +81,7 @@ public class stuffServer extends HttpServlet {
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
             while (rs.next()) {
+                stuffBean stuff1 = new stuffBean();
                 int wno = Integer.parseInt(rs.getString("Wno"));
                 String wname = rs.getString("Wname");
                 String wsp = rs.getString("Wsp");

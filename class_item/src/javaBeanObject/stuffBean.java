@@ -2,14 +2,6 @@ package javaBeanObject;
 
 import java.util.Objects;
 
-/**
- * ClassName: stuffBean
- * Description:
- *
- * @Author jekny
- * @Create 2026/3/25 19:12
- * @Version 1.0
- */
 public class stuffBean {
     private int Wno;
     private String Wname;
