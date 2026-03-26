@@ -41,7 +41,7 @@
                 <td>
                     <input type="checkbox" name="deleteAbout" value="<%=wno%>">
                     <a href="<%=request.getContextPath()%>/stuff/delete?no=<%=wno%>">删除</a>|
-                    <a href="<%=request.getContextPath()%>/edit.jsp?no=<%=wno%>">修改</a>|
+                    <a href="<%=request.getContextPath()%>/stuff/editselect?no=<%=wno%>">修改</a>|
                     <a href="<%=request.getContextPath()%>/detail.jsp?no=<%=wno%>">详细</a>
                 </td>
             </tr>

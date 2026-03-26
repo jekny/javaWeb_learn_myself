@@ -11,6 +11,6 @@
 数量：<input type="number" name="Wnumb"/><br>
 仓库位置：<input type="text" name="Wposition"/><br>
 <hr>
-<a href="<%=request.getContextPath()%>/index.jsp">返回首页列表</a>
+<a href="<%=request.getContextPath()%>/stuff/list">返回首页列表</a>
 </body>
 </html>

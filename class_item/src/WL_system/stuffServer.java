@@ -23,7 +23,7 @@ import java.util.ArrayList;
  * @Create 2026/3/25 19:15
  * @Version 1.0
  */
-@WebServlet(value = {"/stuff/list","/stuff/add","/stuff/delete","/stuff/deleteabout"})
+@WebServlet(value = {"/stuff/list","/stuff/add","/stuff/delete","/stuff/deleteabout","/stuff/editselect","/stuff/editreal","/stuff/detail"})
 public class stuffServer extends HttpServlet {
     @Override
     protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -38,6 +38,91 @@ public class stuffServer extends HttpServlet {
             doDelete_one(request,response);
         }else if ("/stuff/deleteabout".equals(servletPath)){
             doDeleteAbout(request,response);
+        }else if ("/stuff/editselect".equals(servletPath)){
+            doEditSelect(request,response);
+        }else if ("/stuff/editreal".equals(servletPath)){
+            doEditReal(request,response);
+        }else if ("/stuff/detail".equals(servletPath)){
+            doDetail(request,response);
+        }
+    }
+
+    private void doDetail(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+        response.setContentType("text/html;charset=utf-8");
+        request.setCharacterEncoding("utf-8");
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            con = jdbcUtil.getCon();
+            String sql = "select Wno,Wname,W";
+            ps = con.prepareStatement(sql);
+        }
+    }
+
+    private void doEditReal(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+        response.setContentType("text/html;charset=utf-8");
+        request.setCharacterEncoding("utf-8");
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String no = request.getParameter("no");
+        String wname = request.getParameter("Wname");
+        String wsp = request.getParameter("Wsp");
+        int wnumb = Integer.parseInt(request.getParameter("Wnumb"));
+        String wposition = request.getParameter("Wposition");
+
+        try {
+            con = jdbcUtil.getCon();
+            String sql = "update wlsystem set Wname= ?,Wsp= ?,Wnumb= ?,Wposition= ? where Wno = ?";
+            ps = con.prepareStatement(sql);
+            ps.setString(1,wname);
+            ps.setString(2,wsp);
+            ps.setInt(3,wnumb);
+            ps.setString(4,wposition);
+            ps.setString(5,no);
+            int count = ps.executeUpdate();
+            if (count ==1 ){
+                response.sendRedirect(request.getContextPath()+"/stuff/list");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }finally {
+            jdbcUtil.getClose(con,ps,rs);
+        }
+
+    }
+
+    private void doEditSelect(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setContentType("text/html;charset=utf-8");
+        request.setCharacterEncoding("utf-8");
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String wno = request.getParameter("no");
+        stuffBean obj = new stuffBean();
+        try {
+            con = jdbcUtil.getCon();
+            String sql = "select Wno,Wname,Wsp,Wnumb,Wposition from wlsystem where Wno = ?";
+            ps = con.prepareStatement(sql);
+            ps.setString(1,wno);
+            rs = ps.executeQuery();
+            if (rs.next()){
+                int wno1 = rs.getInt("Wno");
+                String wname = rs.getString("Wname");
+                String wsp = rs.getString("Wsp");
+                int wnumb = rs.getInt("Wnumb");
+                String wposition = rs.getString("Wposition");
+                obj.setWno(wno1);
+                obj.setWname(wname);
+                obj.setWsp(wsp);
+                obj.setWnumb(wnumb);
+                obj.setWposition(wposition);
+            }
+            request.setAttribute("obj1",obj);
+            request.getRequestDispatcher("/edit.jsp").forward(request,response);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
