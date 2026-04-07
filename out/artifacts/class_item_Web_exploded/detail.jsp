@@ -6,7 +6,6 @@
 </head>
 <%stuffBean obj1 = (stuffBean) request.getAttribute("obj");%>
 <body>
-
 物料编号：<%=obj1.getWno()%><br>
 物料名称：<%=obj1.getWname()%><br>
 物种：<%=obj1.getWsp()%><br>
