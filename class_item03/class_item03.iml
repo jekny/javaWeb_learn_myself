@@ -20,7 +20,23 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="Tomcat 10.1.39" level="application_server_libraries" />
-    <orderEntry type="library" name="mysql-connector-j-8.0.33 (2)" level="project" />
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../../../../develop_tool/Tomcat_tool/apache-tomcat-10.1.39-windows-x64/apache-tomcat-10.1.39/lib/jsp-api.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../../../../develop_tool/Tomcat_tool/apache-tomcat-10.1.39-windows-x64/apache-tomcat-10.1.39/lib/servlet-api.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
   </component>
 </module>
