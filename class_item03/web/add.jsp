@@ -11,6 +11,7 @@
     <title>add</title>
 </head>
 <body>
+<%--要点：注意加项目的根路径--%>
     <form action="<%=request.getContextPath()%>/add" method="post">
         id:<input type="text" name="id"><br>
         name:<input type="text" name="name"><br>
